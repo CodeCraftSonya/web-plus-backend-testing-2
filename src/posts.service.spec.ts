@@ -21,12 +21,12 @@ describe('PostsService', () => {
 
     it('should return all posts if called without options', () => {
       const result = postsService.findMany();
-      expect(result).toEqual(posts);
+      expect(result.map(({ id, ...post }) => post)).toEqual(posts);
     });
 
     it('should return correct posts for skip and limit options', () => {
       const result = postsService.findMany({ skip: 1, limit: 2 });
-      expect(result).toEqual(posts.slice(1, 3));
+      expect(result.map(({ id, ...post }) => post)).toEqual(posts.slice(1, 3));
     });
 
     it('should return empty array when skip exceeds posts count', () => {
@@ -36,12 +36,12 @@ describe('PostsService', () => {
 
     it('should return all posts when limit exceeds posts count', () => {
       const result = postsService.findMany({ limit: 10 });
-      expect(result).toEqual(posts);
+      expect(result.map(({ id, ...post }) => post)).toEqual(posts);
     });
 
     it('should return limited posts when limit is provided', () => {
       const result = postsService.findMany({ limit: 2 });
-      expect(result).toEqual(posts.slice(0, 2));
+      expect(result.map(({ id, ...post }) => post)).toEqual(posts.slice(0, 2));
     });
   });
 });
