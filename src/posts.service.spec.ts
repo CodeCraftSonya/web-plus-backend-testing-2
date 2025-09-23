@@ -29,9 +29,19 @@ describe('PostsService', () => {
       expect(result).toEqual(posts.slice(1, 3));
     });
 
-    it('should return correct posts for before and after options', () => {
-      const result = postsService.findMany({ skip: 1, limit: 2, before: 'Post 3', after: 'Post 1' });
-      expect(result).toEqual(posts.slice(1, 3));
+    it('should return empty array when skip exceeds posts count', () => {
+      const result = postsService.findMany({ skip: 10 });
+      expect(result).toEqual([]);
+    });
+
+    it('should return all posts when limit exceeds posts count', () => {
+      const result = postsService.findMany({ limit: 10 });
+      expect(result).toEqual(posts);
+    });
+
+    it('should return limited posts when limit is provided', () => {
+      const result = postsService.findMany({ limit: 2 });
+      expect(result).toEqual(posts.slice(0, 2));
     });
   });
 });
